@@ -1,4 +1,4 @@
-# AI & RL Lexicon
+# AI and Reinforcement Learning Glossary
 
 A searchable glossary of **124 artificial intelligence and reinforcement learning terms**, written for people who need to hold a technical conversation with ML researchers without being one. It covers transformer basics through RL post-training, environments and graders, reward hacking, evaluation and safety, and the code-security vocabulary that shows up when RL targets vulnerability work.
 
@@ -71,7 +71,7 @@ python3 -m http.server 8000
 
 ## Publishing with GitHub Pages
 
-In the repo, go to **Settings → Pages**, set **Source** to *Deploy from a branch*, choose `main` and `/ (root)`, and save. The site appears at `https://<your-username>.github.io/ai-rl-lexicon/`.
+In the repo, go to **Settings → Pages**, set **Source** to *Deploy from a branch*, choose `main` and `/ (root)`, and save. The site appears at `https://<your-username>.github.io/AI-and-Reinforcement-Learning-Glossary/`.
 
 ## License
 
