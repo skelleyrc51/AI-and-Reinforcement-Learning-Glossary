@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A searchable glossary of AI and reinforcement learning terms, from transformer basics to RL post-training, graders, reward hacking and code-security RL.">
+<title>AI &amp; RL Lexicon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#F3F4F1; --surface:#FFFFFF; --ink:#1A1D1B; --muted:#5C645E; --rule:#DADED7;
+  --accent:#2E6150; --accent-soft:#E2ECE7; --math:#8A5A12; --hl:#FFF3CF;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#121513; --surface:#191D1A; --ink:#E5E8E3; --muted:#9AA39C; --rule:#2C322E;
+    --accent:#86C4AC; --accent-soft:#1F2D27; --math:#DDAE62; --hl:#3A3220; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121513; --surface:#191D1A; --ink:#E5E8E3; --muted:#9AA39C; --rule:#2C322E;
+  --accent:#86C4AC; --accent-soft:#1F2D27; --math:#DDAE62; --hl:#3A3220; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.6 var(--sans);padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1120px;margin:0 auto}
+header.top{padding-block:40px 20px;display:grid;gap:10px;border-bottom:1px solid var(--rule)}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font:600 clamp(30px,5vw,44px)/1.05 var(--serif);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:40px;padding-top:24px}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;display:grid;gap:18px}
+.search{display:grid;gap:6px}
+.search label{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.search input{width:100%;font:15px var(--sans);padding:9px 11px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--ink)}
+.search input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.cats{display:grid;gap:2px;list-style:none;margin:0;padding:0}
+.cats button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:8px;width:100%;box-sizing:border-box;padding:6px 10px;border-radius:5px;font-size:14px;color:var(--ink)}
+.cats button .n{font:12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.cats button:hover{background:var(--accent-soft)}
+.cats button[aria-pressed="true"]{background:var(--accent);color:var(--ground)}
+.cats button[aria-pressed="true"] .n{color:inherit;opacity:.8}
+.cats button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.count{font:12px var(--mono);color:var(--muted)}
+section.group{margin-bottom:36px}
+section.group>h2{font:600 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 4px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+section.group>p.gdesc{color:var(--muted);font-size:14px;margin:10px 0 4px;max-width:65ch}
+dl{margin:0}
+.entry{display:grid;grid-template-columns:minmax(170px,28%) 1fr;gap:6px 28px;padding:18px 0;border-bottom:1px solid var(--rule);scroll-margin-top:24px}
+.entry.flash{background:var(--hl);transition:background 1.2s}
+dt{display:grid;gap:4px;align-content:start}
+dt .term{font:600 19px/1.25 var(--serif);text-wrap:balance}
+dt .aka{font-size:12.5px;color:var(--muted)}
+dt .nota{font:500 13px/1.3 var(--mono);color:var(--math)}
+dd{margin:0;display:grid;gap:8px;max-width:68ch}
+dd p{margin:0}
+.field{font-size:14px;color:var(--ink);padding-left:12px;border-left:2px solid var(--math)}
+.field b{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--math);display:block;margin-bottom:4px}
+.see{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.see a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
+.see a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.empty{padding:40px 0;color:var(--muted)}
+@media (max-width:760px){
+  .layout{grid-template-columns:1fr;gap:16px}
+  nav.side{position:static}
+  .cats{display:flex;flex-wrap:wrap;gap:6px}
+  .cats button{width:auto;border:1px solid var(--rule);border-radius:999px;padding:5px 11px;font-size:13px}
+  .entry{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.entry.flash{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Working glossary · AI + reinforcement learning</div>
+    <h1>The <em>AI &amp; RL</em> Lexicon</h1>
+    <p class="lede">Technical definitions for holding your own with researchers at frontier labs, from transformer basics through RL post-training, environments, graders and code-security RL. Notation is shown the way it appears in papers.</p>
+  </header>
+  <div class="layout">
+    <nav class="side" aria-label="Filter glossary">
+      <div class="search">
+        <label for="q">Search terms</label>
+        <input id="q" type="search" placeholder="e.g. advantage, GRPO, grader" autocomplete="off">
+      </div>
+      <ul class="cats" id="cats"></ul>
+      <div class="count" id="count"></div>
+    </nav>
+    <main id="list"></main>
+  </div>
+</div>
+
+<script>
+let CATS=[],T=[];
+async function load(){
+  const [c,t]=await Promise.all([fetch("data/categories.json").then(r=>r.json()),fetch("data/terms.json").then(r=>r.json())]);
+  CATS=c.map(x=>({id:x.id,name:x.name,desc:x.description}));
+  T=t.map(x=>({t:x.term,c:x.category,a:x.aka,n:x.notation,d:x.definition,f:x.note,s:x.see_also||[]}));
+  init();
+}
+function init(){
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const seen={};T.forEach(e=>{let id=slug(e.t);if(seen[id])id+="-"+e.c;seen[id]=1;e.id=id;});
+const byName={};T.forEach(e=>{byName[e.t]=e;});
+
+let active="all";
+const $cats=document.getElementById("cats"),$list=document.getElementById("list"),$q=document.getElementById("q"),$count=document.getElementById("count");
+
+function renderCats(){
+  const opts=[{id:"all",name:"All terms"},...CATS];
+  $cats.innerHTML=opts.map(c=>{const n=c.id==="all"?T.length:T.filter(e=>e.c===c.id).length;
+    return `<li><button type="button" data-c="${c.id}" aria-pressed="${active===c.id}"><span>${c.name}</span><span class="n">${n}</span></button></li>`}).join("");
+}
+const esc=s=>s.replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const resolve=name=>byName[name];
+function entryHTML(e){
+  const see=(e.s||[]).map(n=>{const r=resolve(n);return r?`<a href="#${r.id}" data-go="${r.id}">${esc(n)}</a>`:""}).join("");
+  return `<div class="entry" id="${e.id}"><dt><span class="term">${esc(e.t)}</span>${e.a?`<span class="aka">${esc(e.a)}</span>`:""}${e.n?`<span class="nota">${esc(e.n)}</span>`:""}</dt>
+  <dd><p>${esc(e.d)}</p>${e.f?`<div class="field"><b>In the room</b>${esc(e.f)}</div>`:""}${see?`<div class="see">See also ${see}</div>`:""}</dd></div>`;
+}
+function render(){
+  const q=$q.value.trim().toLowerCase();
+  const match=e=>(active==="all"||e.c===active)&&(!q||[e.t,e.a,e.d,e.n,e.f].some(v=>v&&v.toLowerCase().includes(q)));
+  let html="",shown=0;
+  CATS.forEach(c=>{
+    const items=T.filter(e=>e.c===c.id&&match(e));
+    if(!items.length)return;shown+=items.length;
+    html+=`<section class="group"><h2>${c.name}</h2><p class="gdesc">${c.desc}</p><dl>${items.map(entryHTML).join("")}</dl></section>`;
+  });
+  $list.innerHTML=html||`<p class="empty">No terms match “${esc($q.value)}”. Try a shorter word or clear the category filter.</p>`;
+  $count.textContent=`Showing ${shown} of ${T.length} terms`;
+}
+function go(id){
+  if(!document.getElementById(id)){active="all";$q.value="";renderCats();render();}
+  const el=document.getElementById(id);if(!el)return;
+  el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1400);
+}
+$cats.addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;active=b.dataset.c;renderCats();render();});
+$q.addEventListener("input",render);
+$list.addEventListener("click",ev=>{const a=ev.target.closest("a[data-go]");if(!a)return;ev.preventDefault();go(a.dataset.go);});
+renderCats();render();
+if(location.hash)setTimeout(()=>go(location.hash.slice(1)),50);
+}
+load().catch(()=>{document.getElementById("list").innerHTML='<p class="empty">Could not load the glossary data. If you opened this file directly, serve the folder instead (for example <code>python3 -m http.server</code>) or use the GitHub Pages site.</p>';});
+</script>
+
+</body>
+</html>

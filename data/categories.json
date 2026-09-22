@@ -1,0 +1,37 @@
+[
+  {
+    "id": "found",
+    "name": "AI foundations",
+    "description": "The model-side vocabulary everything else sits on."
+  },
+  {
+    "id": "core",
+    "name": "RL core concepts",
+    "description": "The formal building blocks of reinforcement learning."
+  },
+  {
+    "id": "algo",
+    "name": "RL algorithms",
+    "description": "Named methods you will hear in research conversations."
+  },
+  {
+    "id": "post",
+    "name": "LLM post-training",
+    "description": "How pretrained models get turned into assistants, reasoners and agents."
+  },
+  {
+    "id": "env",
+    "name": "Environments & rewards",
+    "description": "Where RL meets the product: tasks, graders, verifiers and what goes wrong with them."
+  },
+  {
+    "id": "eval",
+    "name": "Evaluation & safety",
+    "description": "How labs measure models and manage risk."
+  },
+  {
+    "id": "sec",
+    "name": "Security for AI training",
+    "description": "Code-security terms that show up when RL targets vulnerability work."
+  }
+]

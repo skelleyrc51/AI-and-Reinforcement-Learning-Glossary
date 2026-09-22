@@ -1,0 +1,1132 @@
+[
+  {
+    "term": "Artificial intelligence (AI)",
+    "category": "found",
+    "definition": "Umbrella term for systems that perform tasks associated with human cognition: perception, language, reasoning, planning. In current industry usage it almost always means machine-learned models, especially large neural networks.",
+    "see_also": [
+      "Machine learning (ML)",
+      "Large language model (LLM)"
+    ]
+  },
+  {
+    "term": "Machine learning (ML)",
+    "category": "found",
+    "definition": "Building systems that learn behavior from data rather than hand-written rules. The three classic paradigms are supervised learning (labeled examples), unsupervised learning (structure in unlabeled data) and reinforcement learning (learning from reward through interaction).",
+    "see_also": [
+      "Reinforcement learning (RL)",
+      "Supervised fine-tuning (SFT)"
+    ]
+  },
+  {
+    "term": "Neural network",
+    "category": "found",
+    "definition": "A function built from layers of weighted sums followed by nonlinear activations. Its weights are adjusted during training so the output moves closer to a target. Deep learning means networks with many layers.",
+    "see_also": [
+      "Parameters / weights",
+      "Gradient descent"
+    ]
+  },
+  {
+    "term": "Parameters / weights",
+    "category": "found",
+    "notation": "θ",
+    "definition": "The learned numbers inside a model. Model size is quoted in parameters (for example 70B = 70 billion). In RL papers the policy is written π_θ to show it is controlled by the parameters θ.",
+    "see_also": [
+      "Policy"
+    ]
+  },
+  {
+    "term": "Loss function",
+    "category": "found",
+    "notation": "L(θ)",
+    "definition": "A scalar measuring how wrong the model is on a batch. Training minimizes it. Pretraining uses next-token cross-entropy; RL replaces a fixed target with an objective built from rewards.",
+    "see_also": [
+      "Gradient descent",
+      "Pretraining"
+    ]
+  },
+  {
+    "term": "Gradient descent",
+    "category": "found",
+    "notation": "θ ← θ − η∇L",
+    "definition": "The optimization loop behind all of this: compute how the loss changes with each parameter (the gradient), then step the parameters a little in the opposite direction. η is the learning rate. Adam/AdamW are the standard variants.",
+    "see_also": [
+      "Backpropagation",
+      "Loss function"
+    ]
+  },
+  {
+    "term": "Backpropagation",
+    "category": "found",
+    "definition": "The algorithm that computes gradients efficiently by applying the chain rule backward through the network's layers.",
+    "see_also": [
+      "Gradient descent"
+    ]
+  },
+  {
+    "term": "Transformer",
+    "category": "found",
+    "definition": "The neural architecture (Vaswani et al., 2017) behind nearly every modern LLM. It processes a sequence of tokens with stacked attention and feed-forward layers, and parallelizes well on GPUs, which is what made large-scale pretraining practical.",
+    "see_also": [
+      "Attention",
+      "Token"
+    ]
+  },
+  {
+    "term": "Attention",
+    "category": "found",
+    "aka": "self-attention",
+    "notation": "softmax(QKᵀ/√d)V",
+    "definition": "The mechanism that lets each token weigh every other token in the context when computing its representation. Cost grows with the square of sequence length, which is why long context is expensive.",
+    "see_also": [
+      "Transformer",
+      "Context window"
+    ]
+  },
+  {
+    "term": "Token",
+    "category": "found",
+    "definition": "The unit a language model reads and writes: usually a word piece of about 3–4 characters of English. A tokenizer maps text to token IDs. Pricing, context limits and RL rollout budgets are all counted in tokens.",
+    "see_also": [
+      "Context window",
+      "Rollout"
+    ]
+  },
+  {
+    "term": "Embedding",
+    "category": "found",
+    "definition": "A dense vector representing a token, document or other object, positioned so that similar things are close together. Embeddings power semantic search and retrieval.",
+    "see_also": [
+      "Retrieval-augmented generation (RAG)"
+    ]
+  },
+  {
+    "term": "Context window",
+    "category": "found",
+    "definition": "The maximum number of tokens a model can take into account at once, covering prompt, tool outputs and its own response. Long-horizon agentic tasks (large codebases, multi-step exploits) press hard against this limit.",
+    "see_also": [
+      "Horizon",
+      "Agent (AI)"
+    ]
+  },
+  {
+    "term": "Logits & softmax",
+    "category": "found",
+    "notation": "p = softmax(z / T)",
+    "definition": "Logits z are the raw scores the model assigns to every possible next token. Softmax turns them into a probability distribution. Log-probabilities of generated tokens are the quantity that RL algorithms push up or down.",
+    "see_also": [
+      "Temperature",
+      "Policy gradient"
+    ]
+  },
+  {
+    "term": "Temperature",
+    "category": "found",
+    "notation": "T",
+    "definition": "Divides logits before sampling. Low T approaches greedy, deterministic output; higher T gives more diverse samples. RL training uses nonzero temperature so rollouts differ and the algorithm has variation to learn from.",
+    "see_also": [
+      "Exploration vs. exploitation",
+      "Logits & softmax"
+    ]
+  },
+  {
+    "term": "Large language model (LLM)",
+    "category": "found",
+    "definition": "A transformer trained on very large text corpora to predict the next token, then usually post-trained to follow instructions. Frontier LLMs are the models RL environments are built to improve.",
+    "see_also": [
+      "Pretraining",
+      "Post-training"
+    ]
+  },
+  {
+    "term": "Foundation model",
+    "category": "found",
+    "definition": "A large model pretrained on broad data that is adapted to many downstream tasks. Often used interchangeably with base model or frontier model.",
+    "see_also": [
+      "Pretraining"
+    ]
+  },
+  {
+    "term": "Pretraining",
+    "category": "found",
+    "definition": "The first and most compute-heavy phase: next-token prediction over trillions of tokens. It produces a base model with broad knowledge but no reliable instruction-following or goal-directed behavior.",
+    "see_also": [
+      "Post-training",
+      "Scaling laws"
+    ]
+  },
+  {
+    "term": "Inference",
+    "category": "found",
+    "definition": "Running a trained model to produce outputs. In RL, generating rollouts is inference, and it often dominates training cost for LLM RL.",
+    "see_also": [
+      "Rollout",
+      "Test-time compute"
+    ]
+  },
+  {
+    "term": "Scaling laws",
+    "category": "found",
+    "definition": "Empirical power-law relationships between model performance and compute, data and parameter count (Kaplan et al. 2020; Chinchilla, Hoffmann et al. 2022). Labs increasingly discuss scaling RL compute and test-time compute as additional axes beyond pretraining.",
+    "see_also": [
+      "Test-time compute",
+      "Compute (FLOPs)"
+    ]
+  },
+  {
+    "term": "Compute (FLOPs)",
+    "category": "found",
+    "definition": "Floating-point operations. Training runs are sized in total FLOPs and GPU-hours. It is a lab's scarcest resource, so every environment competes for a share of the RL compute budget.",
+    "note": "When a lab asks whether an environment is worth the compute, they mean: does signal per GPU-hour beat their other options?",
+    "see_also": [
+      "Scaling laws"
+    ]
+  },
+  {
+    "term": "Mixture of Experts (MoE)",
+    "category": "found",
+    "definition": "An architecture where each token is routed to a small subset of expert sub-networks. Total parameters can be very large while compute per token stays modest.",
+    "see_also": [
+      "Parameters / weights"
+    ]
+  },
+  {
+    "term": "Distillation",
+    "category": "found",
+    "definition": "Training a smaller student model to imitate a larger teacher model's outputs or probability distributions. It is common for turning RL-trained reasoning ability into cheaper models.",
+    "see_also": [
+      "Synthetic data"
+    ]
+  },
+  {
+    "term": "Hallucination",
+    "category": "found",
+    "definition": "Fluent output that is false or unsupported, such as invented APIs, CVEs or code paths. In security tasks, hallucinated findings are the core reason graders must verify claims rather than trust them.",
+    "see_also": [
+      "Grader",
+      "False positive"
+    ]
+  },
+  {
+    "term": "Multimodal",
+    "category": "found",
+    "definition": "Models that take or produce more than text, such as images, audio, video or screen pixels. Computer-use agents rely on multimodal perception.",
+    "see_also": [
+      "Agent (AI)"
+    ]
+  },
+  {
+    "term": "Retrieval-augmented generation (RAG)",
+    "category": "found",
+    "definition": "Fetching relevant documents at query time (often by embedding similarity) and placing them in the context so the model answers from them. It is an inference-time technique, distinct from training.",
+    "see_also": [
+      "Embedding",
+      "Context window"
+    ]
+  },
+  {
+    "term": "Reinforcement learning (RL)",
+    "category": "core",
+    "definition": "Learning a behavior by trial and error: an agent acts in an environment, receives rewards, and adjusts its policy to maximize expected cumulative reward. No one provides the correct answer; only a score for what the agent did.",
+    "note": "For LLMs this is the shift from 'imitate good text' to 'find whatever actually works, as judged by the reward.' Environment quality becomes the bottleneck.",
+    "see_also": [
+      "Agent (RL)",
+      "Environment",
+      "Reward"
+    ]
+  },
+  {
+    "term": "Agent (RL)",
+    "category": "core",
+    "definition": "The learner and decision-maker. In LLM RL the agent is the model being trained (the policy), sometimes wrapped in a scaffold that gives it tools.",
+    "see_also": [
+      "Policy",
+      "Scaffold / harness"
+    ]
+  },
+  {
+    "term": "Environment",
+    "category": "core",
+    "definition": "Everything outside the agent. It receives actions, returns new observations and emits rewards. Formally, it defines the transition dynamics and reward function of an MDP.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Markov decision process (MDP)"
+    ]
+  },
+  {
+    "term": "State / observation",
+    "category": "core",
+    "notation": "s, o",
+    "definition": "The state s is the complete situation; an observation o is what the agent actually sees. LLM agents almost never see full state. They see a prompt plus tool outputs, which makes most real tasks partially observable.",
+    "see_also": [
+      "POMDP"
+    ]
+  },
+  {
+    "term": "Action / action space",
+    "category": "core",
+    "notation": "a ∈ 𝒜",
+    "definition": "What the agent can do. For an LLM, each token is technically an action. In agentic settings, actions are usually thought of at the level of tool calls such as running a command, editing a file or submitting an answer.",
+    "see_also": [
+      "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Reward",
+    "category": "core",
+    "notation": "r",
+    "definition": "A scalar signal the environment emits to score behavior. The reward is the only definition of 'good' the agent gets, so everything it learns is shaped by what the reward does and does not check.",
+    "see_also": [
+      "Reward hacking",
+      "Sparse vs. dense reward",
+      "Grader"
+    ]
+  },
+  {
+    "term": "Return",
+    "category": "core",
+    "notation": "G = Σ γᵗ rₜ",
+    "definition": "The cumulative, usually discounted, reward from a point in time to the end of the episode. RL maximizes expected return, not the immediate reward.",
+    "see_also": [
+      "Discount factor"
+    ]
+  },
+  {
+    "term": "Discount factor",
+    "category": "core",
+    "notation": "γ ∈ [0,1]",
+    "definition": "Down-weights future rewards. γ near 1 means far-future outcomes matter almost as much as immediate ones. LLM RL on single-answer tasks often effectively uses γ = 1.",
+    "see_also": [
+      "Return"
+    ]
+  },
+  {
+    "term": "Episode / trajectory",
+    "category": "core",
+    "notation": "τ = (s₀,a₀,r₀,s₁,…)",
+    "definition": "One complete run from start to termination. The trajectory is the full sequence of observations, actions and rewards. In LLM work a trajectory is the full transcript: prompt, reasoning, tool calls and final answer.",
+    "see_also": [
+      "Rollout"
+    ]
+  },
+  {
+    "term": "Rollout",
+    "category": "core",
+    "definition": "Running the current policy in the environment to generate a trajectory, or the trajectory itself. Labs talk about rollouts per task, rollout throughput and rollout cost.",
+    "note": "Environment latency directly throttles rollout throughput. Slow environments leave GPUs idle.",
+    "see_also": [
+      "Episode / trajectory",
+      "Rollout infrastructure"
+    ]
+  },
+  {
+    "term": "Policy",
+    "category": "core",
+    "notation": "π_θ(a | s)",
+    "definition": "The agent's strategy: a probability distribution over actions given the state. For an LLM, the model itself is the policy, a distribution over next tokens given the context.",
+    "see_also": [
+      "Parameters / weights",
+      "Policy gradient"
+    ]
+  },
+  {
+    "term": "Value function",
+    "category": "core",
+    "notation": "V^π(s)",
+    "definition": "The expected return from state s if the agent follows policy π afterward. It measures how good a situation is.",
+    "see_also": [
+      "Q-function",
+      "Actor-critic"
+    ]
+  },
+  {
+    "term": "Q-function",
+    "category": "core",
+    "aka": "action-value function",
+    "notation": "Q^π(s,a)",
+    "definition": "The expected return from taking action a in state s and then following π. It measures how good an action is in context.",
+    "see_also": [
+      "Q-learning / DQN",
+      "Advantage"
+    ]
+  },
+  {
+    "term": "Advantage",
+    "category": "core",
+    "notation": "A(s,a) = Q(s,a) − V(s)",
+    "definition": "How much better an action was than the policy's average in that state. Policy-gradient methods use advantage rather than raw reward, which cuts variance. GRPO estimates it by comparing a sample with its siblings.",
+    "see_also": [
+      "GRPO",
+      "PPO",
+      "Baseline"
+    ]
+  },
+  {
+    "term": "Baseline",
+    "category": "core",
+    "notation": "b(s)",
+    "definition": "A value subtracted from the return in policy-gradient updates to reduce variance without introducing bias. A learned value function (critic) or a group-mean reward are common choices.",
+    "see_also": [
+      "Advantage",
+      "GRPO"
+    ]
+  },
+  {
+    "term": "Markov decision process (MDP)",
+    "category": "core",
+    "notation": "(𝒮, 𝒜, P, R, γ)",
+    "definition": "The formal model of an RL problem: states, actions, transition probabilities P, reward function R and discount γ. 'Markov' means the next state depends only on the current state and action, not on history.",
+    "see_also": [
+      "POMDP",
+      "Bellman equation"
+    ]
+  },
+  {
+    "term": "POMDP",
+    "category": "core",
+    "aka": "partially observable MDP",
+    "definition": "An MDP where the agent receives observations rather than the full state. Debugging an unfamiliar binary or codebase is a POMDP: the agent must explore to learn what is true.",
+    "see_also": [
+      "State / observation"
+    ]
+  },
+  {
+    "term": "Bellman equation",
+    "category": "core",
+    "notation": "V(s) = E[r + γV(s′)]",
+    "definition": "The recursive relationship at the heart of value-based RL: a state's value equals the immediate reward plus the discounted value of the next state. Temporal-difference learning and Q-learning are built on it.",
+    "see_also": [
+      "Temporal-difference (TD) learning"
+    ]
+  },
+  {
+    "term": "Exploration vs. exploitation",
+    "category": "core",
+    "definition": "The core tension of RL: try new actions to discover better strategies, or use what already works. If the policy never produces a success, it has nothing to reinforce.",
+    "note": "This is why task difficulty matters. Tasks the model never solves produce zero learning signal.",
+    "see_also": [
+      "Pass rate / difficulty band",
+      "Temperature"
+    ]
+  },
+  {
+    "term": "On-policy vs. off-policy",
+    "category": "core",
+    "definition": "On-policy methods (PPO, GRPO) learn only from data generated by the current policy. Off-policy methods (Q-learning) can reuse data from older policies or other sources. On-policy is standard in LLM RL, which is why fresh rollouts are needed every step.",
+    "see_also": [
+      "PPO",
+      "Offline RL"
+    ]
+  },
+  {
+    "term": "Model-based vs. model-free",
+    "category": "core",
+    "definition": "Model-based RL learns or uses a model of the environment's dynamics to plan (AlphaZero, MuZero). Model-free RL learns a policy or value directly from experience. LLM post-training is almost entirely model-free.",
+    "see_also": [
+      "Monte Carlo Tree Search (MCTS)"
+    ]
+  },
+  {
+    "term": "Credit assignment",
+    "category": "core",
+    "definition": "Working out which of many earlier actions caused a later reward. It is hard when a 200-step agent trajectory gets a single pass/fail at the end.",
+    "see_also": [
+      "Process reward model (PRM)",
+      "Sparse vs. dense reward"
+    ]
+  },
+  {
+    "term": "Sparse vs. dense reward",
+    "category": "core",
+    "definition": "Sparse: reward only at the end, often binary (the exploit worked or it didn't). Dense: frequent partial rewards along the way. Sparse rewards are harder to hack but harder to learn from; dense rewards speed learning but add more ways to game them.",
+    "see_also": [
+      "Reward shaping",
+      "Tiered / partial-credit reward"
+    ]
+  },
+  {
+    "term": "Horizon",
+    "category": "core",
+    "definition": "How many steps an episode lasts. Long-horizon tasks, such as multi-hour agentic coding or exploitation, are a frontier focus because they need planning, memory and recovery from errors.",
+    "see_also": [
+      "Context window",
+      "Credit assignment"
+    ]
+  },
+  {
+    "term": "Sample efficiency",
+    "category": "core",
+    "definition": "How much learning a method extracts per rollout. With expensive environments and expensive inference, sample efficiency translates directly into dollars.",
+    "see_also": [
+      "Rollout"
+    ]
+  },
+  {
+    "term": "Temporal-difference (TD) learning",
+    "category": "algo",
+    "notation": "δ = r + γV(s′) − V(s)",
+    "definition": "Updates value estimates toward a bootstrapped target (immediate reward plus the estimated value of the next state) instead of waiting for the episode to end. The TD error δ drives the update.",
+    "see_also": [
+      "Bellman equation",
+      "Q-learning / DQN"
+    ]
+  },
+  {
+    "term": "Q-learning / DQN",
+    "category": "algo",
+    "definition": "Off-policy value learning: iteratively update Q(s,a) toward r + γ·maxₐ′Q(s′,a′). DQN (DeepMind, 2013/2015) used a neural network for Q and learned Atari games from pixels. It was a landmark, but it is rarely used for LLMs.",
+    "see_also": [
+      "Q-function",
+      "On-policy vs. off-policy"
+    ]
+  },
+  {
+    "term": "Policy gradient",
+    "category": "algo",
+    "notation": "∇J = E[∇log π_θ(a|s) · A]",
+    "definition": "Directly adjusts policy parameters to make high-advantage actions more likely. It is the family behind nearly all LLM RL: raise the log-probability of tokens in good trajectories and lower it in bad ones.",
+    "see_also": [
+      "REINFORCE",
+      "PPO",
+      "GRPO"
+    ]
+  },
+  {
+    "term": "REINFORCE",
+    "category": "algo",
+    "definition": "The simplest policy-gradient algorithm (Williams, 1992): scale the log-probability gradient of sampled actions by the return. It is unbiased but high-variance. Variants with baselines (RLOO, ReMax) have come back for LLM training because of their simplicity.",
+    "see_also": [
+      "Policy gradient",
+      "Baseline"
+    ]
+  },
+  {
+    "term": "Actor-critic",
+    "category": "algo",
+    "definition": "Pairs a policy (actor) with a learned value function (critic). The critic's estimate becomes the baseline for the actor's advantage. PPO as used in RLHF is an actor-critic method.",
+    "see_also": [
+      "PPO",
+      "Value function"
+    ]
+  },
+  {
+    "term": "PPO",
+    "category": "algo",
+    "aka": "Proximal Policy Optimization",
+    "notation": "clip(ρ, 1−ε, 1+ε)·A",
+    "definition": "Schulman et al., 2017. A policy-gradient method that clips the probability ratio ρ between new and old policy so each update stays small and stable. It was the workhorse of original RLHF (InstructGPT) and needs a separate critic model.",
+    "see_also": [
+      "GRPO",
+      "Actor-critic",
+      "KL penalty / reference model"
+    ]
+  },
+  {
+    "term": "GRPO",
+    "category": "algo",
+    "aka": "Group Relative Policy Optimization",
+    "definition": "Introduced with DeepSeekMath (2024) and central to DeepSeek-R1. For each prompt, sample a group of responses, score them all, and use each response's reward relative to the group mean (normalized by std) as its advantage. It drops the critic, saving memory and compute.",
+    "note": "GRPO and its descendants explain why labs want tasks with graded variation. If all samples in a group score the same (all pass or all fail), the advantage is zero and that prompt teaches nothing.",
+    "see_also": [
+      "Advantage",
+      "PPO",
+      "Pass rate / difficulty band"
+    ]
+  },
+  {
+    "term": "DPO",
+    "category": "algo",
+    "aka": "Direct Preference Optimization",
+    "definition": "Rafailov et al., 2023. Trains directly on preference pairs (chosen vs. rejected) with a classification-style loss, with no reward model and no RL loop. It is cheap and popular for style and alignment tuning, but offline, so it doesn't explore.",
+    "see_also": [
+      "RLHF",
+      "Preference data"
+    ]
+  },
+  {
+    "term": "Monte Carlo Tree Search (MCTS)",
+    "category": "algo",
+    "definition": "A planning algorithm that builds a search tree by simulating many possible futures and backing up their results. It was core to AlphaGo and AlphaZero and is explored for LLM reasoning and theorem proving.",
+    "see_also": [
+      "Model-based vs. model-free",
+      "Self-play"
+    ]
+  },
+  {
+    "term": "Imitation learning / behavior cloning",
+    "category": "algo",
+    "definition": "Learning a policy by copying expert demonstrations instead of optimizing reward. SFT on expert transcripts is behavior cloning. It can't exceed the demonstrator and struggles when the agent drifts into unfamiliar states.",
+    "see_also": [
+      "Supervised fine-tuning (SFT)"
+    ]
+  },
+  {
+    "term": "Inverse RL",
+    "category": "algo",
+    "definition": "Inferring the reward function that explains an expert's behavior. It is conceptually related to reward modeling from human preferences.",
+    "see_also": [
+      "Reward model (RM)"
+    ]
+  },
+  {
+    "term": "Offline RL",
+    "category": "algo",
+    "definition": "Learning a policy from a fixed dataset of past trajectories with no new environment interaction. It is useful when interaction is expensive or risky, but limited by what the data covers.",
+    "see_also": [
+      "On-policy vs. off-policy"
+    ]
+  },
+  {
+    "term": "Curriculum learning",
+    "category": "algo",
+    "definition": "Ordering training tasks from easier to harder, or adapting difficulty to the model's current skill, so there is always learnable signal.",
+    "see_also": [
+      "Pass rate / difficulty band"
+    ]
+  },
+  {
+    "term": "Self-play",
+    "category": "algo",
+    "definition": "An agent trains against copies of itself, producing an automatically escalating opponent (AlphaGo Zero, OpenAI Five). Attacker-vs-defender security setups borrow this idea.",
+    "see_also": [
+      "Multi-agent RL"
+    ]
+  },
+  {
+    "term": "Multi-agent RL",
+    "category": "algo",
+    "definition": "Several learning agents interacting, cooperatively or competitively, in a shared environment. The environment is non-stationary from each agent's view because the others keep changing.",
+    "see_also": [
+      "Self-play"
+    ]
+  },
+  {
+    "term": "Post-training",
+    "category": "post",
+    "definition": "Everything after pretraining that shapes a model's behavior: SFT, preference tuning, RLHF, RLVR, safety training. The frontier's capability gains increasingly come from here, especially RL.",
+    "see_also": [
+      "Supervised fine-tuning (SFT)",
+      "RLHF",
+      "RLVR"
+    ]
+  },
+  {
+    "term": "Supervised fine-tuning (SFT)",
+    "category": "post",
+    "aka": "instruction tuning",
+    "definition": "Continued training on curated prompt → ideal-response pairs. It teaches format and baseline skills cheaply and usually comes before RL.",
+    "see_also": [
+      "Imitation learning / behavior cloning"
+    ]
+  },
+  {
+    "term": "RLHF",
+    "category": "post",
+    "aka": "RL from human feedback",
+    "definition": "Train a reward model on human comparisons of outputs, then optimize the LLM against it with RL (classically PPO) plus a KL penalty. It was the recipe behind InstructGPT and early ChatGPT.",
+    "see_also": [
+      "Reward model (RM)",
+      "PPO",
+      "KL penalty / reference model"
+    ]
+  },
+  {
+    "term": "RLAIF / Constitutional AI",
+    "category": "post",
+    "definition": "Replacing some or all human preference labels with AI-generated feedback guided by written principles. Constitutional AI (Anthropic, 2022) used a model critiquing and revising its own outputs against a constitution.",
+    "see_also": [
+      "RLHF",
+      "LLM-as-judge"
+    ]
+  },
+  {
+    "term": "Reward model (RM)",
+    "category": "post",
+    "definition": "A model trained to predict which output a human would prefer, used as a learned stand-in for human judgment during RL. It is imperfect by nature, so optimizing too hard against it invites reward hacking.",
+    "see_also": [
+      "Reward hacking",
+      "Bradley–Terry model"
+    ]
+  },
+  {
+    "term": "Preference data",
+    "category": "post",
+    "definition": "Datasets of the form (prompt, response A, response B, which is better). It is the raw material for reward models and DPO.",
+    "see_also": [
+      "DPO",
+      "Reward model (RM)"
+    ]
+  },
+  {
+    "term": "Bradley–Terry model",
+    "category": "post",
+    "notation": "P(A≻B) = σ(r_A − r_B)",
+    "definition": "The statistical model most reward models assume: the probability one response beats another is a sigmoid of their reward difference.",
+    "see_also": [
+      "Reward model (RM)"
+    ]
+  },
+  {
+    "term": "RLVR",
+    "category": "post",
+    "aka": "RL from verifiable rewards",
+    "definition": "RL where reward comes from a programmatic check rather than a learned preference model: unit tests pass, math answer matches, exploit triggers the crash. The term was popularized by AI2's Tülu 3 (2024). It is the dominant paradigm behind reasoning models.",
+    "note": "Security outcomes such as a crash reproduced, a patch that holds or an exploit that lands are verifiable, which is why code-security tasks fit RLVR so well.",
+    "see_also": [
+      "Verifier",
+      "Grader",
+      "Reasoning model"
+    ]
+  },
+  {
+    "term": "KL penalty / reference model",
+    "category": "post",
+    "notation": "β · KL(π_θ ‖ π_ref)",
+    "definition": "A term that penalizes the trained policy for drifting too far from a frozen reference (usually the SFT model). It limits reward hacking and preserves general capabilities. β sets its strength.",
+    "see_also": [
+      "RLHF",
+      "PPO"
+    ]
+  },
+  {
+    "term": "Reasoning model",
+    "category": "post",
+    "definition": "A model trained, largely with RLVR, to produce extended internal reasoning before answering (OpenAI o-series, DeepSeek-R1, Claude extended thinking). Accuracy scales with how long it is allowed to think.",
+    "see_also": [
+      "Test-time compute",
+      "Chain of thought (CoT)"
+    ]
+  },
+  {
+    "term": "Test-time compute",
+    "category": "post",
+    "definition": "Spending more inference on a problem by thinking longer, sampling many attempts, searching or verifying. It is an axis of improvement separate from model size.",
+    "see_also": [
+      "Reasoning model",
+      "Best-of-N / rejection sampling"
+    ]
+  },
+  {
+    "term": "Chain of thought (CoT)",
+    "category": "post",
+    "definition": "Intermediate reasoning written out before a final answer. RL on verifiable tasks strengthens it; CoT monitoring is also a safety tool for spotting a model reasoning about gaming its reward.",
+    "see_also": [
+      "Reasoning model",
+      "Reward hacking"
+    ]
+  },
+  {
+    "term": "Best-of-N / rejection sampling",
+    "category": "post",
+    "definition": "Generate N candidates, score them with a verifier or reward model, and keep the best. It is used at inference to boost accuracy and in training to build high-quality SFT data from the model's own successes.",
+    "see_also": [
+      "Verifier",
+      "Synthetic data"
+    ]
+  },
+  {
+    "term": "Synthetic data",
+    "category": "post",
+    "definition": "Training data generated by models (often filtered by verifiers) rather than humans. RL environments can double as synthetic-data factories: every verified success is a clean demonstration.",
+    "see_also": [
+      "Best-of-N / rejection sampling",
+      "Distillation"
+    ]
+  },
+  {
+    "term": "LoRA / PEFT",
+    "category": "post",
+    "aka": "parameter-efficient fine-tuning",
+    "definition": "Fine-tuning by training small low-rank adapter matrices instead of all weights. It is far cheaper and common for enterprise customization, rarely used for frontier RL runs.",
+    "see_also": [
+      "Supervised fine-tuning (SFT)"
+    ]
+  },
+  {
+    "term": "RL environment (for LLMs)",
+    "category": "env",
+    "definition": "A packaged, reproducible setting a model can act in during RL training: a task prompt, a sandboxed world (repo, binary, network, browser), tools, and a grader that emits reward. Labs buy or build these at scale; quality, diversity and resistance to hacking are what differentiate them.",
+    "note": "Researchers evaluate an environment on four things: is the reward correct, is it hard to game, is difficulty in the learnable band, and can it run at high rollout throughput?",
+    "see_also": [
+      "Task",
+      "Grader",
+      "Sandbox"
+    ]
+  },
+  {
+    "term": "Task",
+    "category": "env",
+    "definition": "One problem instance inside an environment: a specific repo with a specific bug, a specific binary to exploit. Environments contain many tasks; counts and diversity matter.",
+    "see_also": [
+      "RL environment (for LLMs)"
+    ]
+  },
+  {
+    "term": "Grader",
+    "category": "env",
+    "definition": "The component that inspects the final state or transcript and assigns reward. It can be programmatic (tests, crash reproduction), rubric-based, model-based (LLM judge) or hybrid. The grader is the environment's definition of success.",
+    "see_also": [
+      "Verifier",
+      "LLM-as-judge",
+      "Reward hacking"
+    ]
+  },
+  {
+    "term": "Verifier",
+    "category": "env",
+    "definition": "A grader that checks correctness deterministically: run tests, compare outputs, re-execute a proof of concept. Verifiers are prized because they are cheap at scale and hard to fool, provided they check the right thing.",
+    "see_also": [
+      "RLVR",
+      "Ground truth"
+    ]
+  },
+  {
+    "term": "LLM-as-judge",
+    "category": "env",
+    "aka": "rubric-based reward",
+    "definition": "Using a model with a rubric to score outputs where no programmatic check exists (quality of a vulnerability report, clarity of remediation advice). It is flexible but noisier and itself a target for gaming.",
+    "see_also": [
+      "Grader",
+      "RLAIF / Constitutional AI"
+    ]
+  },
+  {
+    "term": "Reward hacking",
+    "category": "env",
+    "aka": "specification gaming",
+    "definition": "The policy finds a way to earn reward without doing the intended task: editing the tests, special-casing inputs, claiming success, exploiting grader bugs. It is the single biggest failure mode labs worry about in purchased environments.",
+    "note": "Reward hacking isn't hypothetical in code tasks. Models have been documented modifying test files or hardcoding expected outputs. Execution-verified security outcomes are a strong answer.",
+    "see_also": [
+      "Grader",
+      "KL penalty / reference model",
+      "Reward shaping"
+    ]
+  },
+  {
+    "term": "Reward shaping",
+    "category": "env",
+    "definition": "Adding intermediate rewards to guide learning (for example, partial credit for reaching the vulnerable function). It speeds learning but every added signal is another thing the policy can game.",
+    "see_also": [
+      "Sparse vs. dense reward",
+      "Tiered / partial-credit reward"
+    ]
+  },
+  {
+    "term": "Tiered / partial-credit reward",
+    "category": "env",
+    "definition": "Reward that distinguishes levels of success (crash found → controlled crash → working exploit) instead of pass/fail. It gives gradient signal on hard tasks where full success is rare.",
+    "see_also": [
+      "Reward shaping"
+    ]
+  },
+  {
+    "term": "Outcome reward model (ORM)",
+    "category": "env",
+    "definition": "Scores only the final result of a trajectory.",
+    "see_also": [
+      "Process reward model (PRM)"
+    ]
+  },
+  {
+    "term": "Process reward model (PRM)",
+    "category": "env",
+    "definition": "Scores each intermediate step of a trajectory, helping with credit assignment on long reasoning chains. It is more informative but expensive to label and easier to game than outcome checks.",
+    "see_also": [
+      "Credit assignment",
+      "Outcome reward model (ORM)"
+    ]
+  },
+  {
+    "term": "Pass rate / difficulty band",
+    "category": "env",
+    "definition": "The fraction of rollouts that solve a task. Useful tasks sit in a band the model sometimes solves. Near 0% gives no signal and near 100% teaches nothing. Labs filter and recalibrate tasks to stay in this band as models improve.",
+    "note": "Expect questions like 'What's the pass rate of our current model on your tasks?' They are checking the difficulty band.",
+    "see_also": [
+      "GRPO",
+      "Curriculum learning"
+    ]
+  },
+  {
+    "term": "pass@k",
+    "category": "env",
+    "notation": "pass@k",
+    "definition": "The probability that at least one of k sampled attempts succeeds (Chen et al., 2021, Codex paper). pass@1 measures reliability; pass@k with large k measures whether the capability exists at all.",
+    "see_also": [
+      "Benchmark",
+      "Pass rate / difficulty band"
+    ]
+  },
+  {
+    "term": "Sandbox",
+    "category": "env",
+    "definition": "An isolated execution environment (container, VM, microVM) where the agent can run code without escaping or affecting real systems. For offensive security tasks, strong isolation is non-negotiable.",
+    "see_also": [
+      "RL environment (for LLMs)"
+    ]
+  },
+  {
+    "term": "Tool use / function calling",
+    "category": "env",
+    "definition": "The model emits structured calls (run shell, read file, call API) that the harness executes, returning results as new observations. It turns a text model into an agent that acts.",
+    "see_also": [
+      "Agent (AI)",
+      "Model Context Protocol (MCP)"
+    ]
+  },
+  {
+    "term": "Scaffold / harness",
+    "category": "env",
+    "definition": "The code wrapping a model during a task: system prompt, tool definitions, loop control, context management. Results depend heavily on the scaffold, so environments need to specify or be compatible with the lab's own.",
+    "see_also": [
+      "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Gym interface",
+    "category": "env",
+    "notation": "reset() → obs; step(a) → obs, r, done",
+    "definition": "The standard API shape from OpenAI Gym, now Gymnasium, that most RL environments follow. LLM environment frameworks adapt it to multi-turn tool use.",
+    "see_also": [
+      "Environment"
+    ]
+  },
+  {
+    "term": "Rollout infrastructure",
+    "category": "env",
+    "definition": "The systems that spin up environment instances, run policy inference, execute tools and collect trajectories at scale, often thousands of concurrent sandboxes. Environment startup time and reliability directly affect training cost.",
+    "see_also": [
+      "Rollout",
+      "Sandbox"
+    ]
+  },
+  {
+    "term": "Data contamination",
+    "category": "env",
+    "definition": "When test or training tasks leak into pretraining data, so the model has effectively memorized the answer. For public CVEs and CTFs this is a real concern; novel or obfuscated targets avoid it.",
+    "see_also": [
+      "Benchmark",
+      "Held-out set"
+    ]
+  },
+  {
+    "term": "Proof of solvability",
+    "category": "env",
+    "definition": "Evidence that a task can actually be completed, such as a reference solution or a working exploit. Unsolvable tasks waste compute and poison the reward signal.",
+    "see_also": [
+      "Ground truth"
+    ]
+  },
+  {
+    "term": "Benchmark",
+    "category": "eval",
+    "definition": "A fixed task set with a scoring method used to compare models (SWE-bench, MMLU, Cybench). Labs report headline numbers on them, and saturated or contaminated benchmarks push demand for fresh evaluations.",
+    "see_also": [
+      "Eval saturation",
+      "Data contamination"
+    ]
+  },
+  {
+    "term": "Eval saturation",
+    "category": "eval",
+    "definition": "When top models score near the ceiling, a benchmark no longer separates them. This steadily creates demand for harder tasks.",
+    "see_also": [
+      "Benchmark"
+    ]
+  },
+  {
+    "term": "Held-out set",
+    "category": "eval",
+    "definition": "Tasks deliberately excluded from training so they measure generalization. Environment buyers often want a split: some tasks for training, some reserved for eval.",
+    "see_also": [
+      "Data contamination"
+    ]
+  },
+  {
+    "term": "Generalization",
+    "category": "eval",
+    "definition": "Performance on inputs unlike the training data. The question behind every environment purchase: does training here improve the model elsewhere, or only on these tasks?",
+    "see_also": [
+      "Held-out set"
+    ]
+  },
+  {
+    "term": "Red teaming",
+    "category": "eval",
+    "definition": "Adversarially probing a model or system to find harmful behaviors, jailbreaks or security weaknesses before release.",
+    "see_also": [
+      "Jailbreak",
+      "Prompt injection"
+    ]
+  },
+  {
+    "term": "Jailbreak",
+    "category": "eval",
+    "definition": "An input that gets a model to bypass its safety training and produce content it would normally refuse.",
+    "see_also": [
+      "Red teaming"
+    ]
+  },
+  {
+    "term": "Prompt injection",
+    "category": "eval",
+    "definition": "Malicious instructions hidden in content the model processes (a web page, file, tool output) that hijack an agent's behavior. It is a leading security risk for agents with tool access.",
+    "see_also": [
+      "Agent (AI)",
+      "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Alignment",
+    "category": "eval",
+    "definition": "Making models reliably pursue the goals their developers and users intend, including under optimization pressure. Reward hacking is an alignment failure in miniature.",
+    "see_also": [
+      "Reward hacking"
+    ]
+  },
+  {
+    "term": "Frontier safety framework",
+    "category": "eval",
+    "aka": "responsible scaling policy",
+    "definition": "A lab's published policy (Anthropic RSP, OpenAI Preparedness Framework, Google DeepMind Frontier Safety Framework) that defines dangerous-capability thresholds, including cyber, and the safeguards required before deploying past them.",
+    "note": "Cyber-offense is a named risk domain in these frameworks. Labs must measure it, which creates demand for rigorous security evals alongside training environments.",
+    "see_also": [
+      "Dual-use / cyber uplift"
+    ]
+  },
+  {
+    "term": "Dual-use / cyber uplift",
+    "category": "eval",
+    "definition": "Capabilities that help both defenders and attackers. 'Uplift' measures how much a model increases a threat actor's ability compared with existing tools. Labs weigh it when training on offensive security tasks.",
+    "see_also": [
+      "Frontier safety framework"
+    ]
+  },
+  {
+    "term": "System card / model card",
+    "category": "eval",
+    "definition": "The documentation a lab publishes with a model covering capabilities, evaluations (often including cyber) and safety mitigations. It is a good place to learn what a lab measures and cares about.",
+    "see_also": [
+      "Frontier safety framework"
+    ]
+  },
+  {
+    "term": "Agent (AI)",
+    "category": "eval",
+    "definition": "A model operating in a loop: observe, decide, call tools, repeat, until a goal is reached. Agentic coding and security agents are the product direction RL environments train for.",
+    "see_also": [
+      "Tool use / function calling",
+      "Agent (RL)"
+    ]
+  },
+  {
+    "term": "Model Context Protocol (MCP)",
+    "category": "eval",
+    "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
+    "see_also": [
+      "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Fuzzing",
+    "category": "sec",
+    "definition": "Automated testing that feeds large volumes of generated or mutated inputs to a program to trigger crashes and bugs. Coverage-guided fuzzers (AFL++, libFuzzer) and Mayhem are examples. Fuzzing produces reproducible, verifiable ground truth.",
+    "see_also": [
+      "Ground truth",
+      "Sanitizers"
+    ]
+  },
+  {
+    "term": "Vulnerability (CVE / CWE)",
+    "category": "sec",
+    "definition": "A flaw that can be exploited to violate security. A CVE is an identifier for a specific public vulnerability; a CWE is a category of weakness (for example CWE-787, out-of-bounds write).",
+    "see_also": [
+      "Proof of concept (PoC)"
+    ]
+  },
+  {
+    "term": "Proof of concept (PoC)",
+    "category": "sec",
+    "definition": "An input or script that demonstrates a vulnerability is real, typically by triggering the crash or unauthorized behavior. In RL it doubles as a verifier: rerun the PoC and the reward is objective.",
+    "see_also": [
+      "Verifier",
+      "Exploit"
+    ]
+  },
+  {
+    "term": "Exploit",
+    "category": "sec",
+    "definition": "Code that leverages a vulnerability to achieve an attacker goal, such as control-flow hijack, code execution or data exfiltration. It goes well beyond a crash.",
+    "see_also": [
+      "Proof of concept (PoC)"
+    ]
+  },
+  {
+    "term": "Sanitizers",
+    "category": "sec",
+    "aka": "ASan, UBSan, MSan",
+    "definition": "Compiler instrumentation that detects memory errors and undefined behavior at runtime with precise reports. Sanitizer output is a common programmatic grader signal.",
+    "see_also": [
+      "Fuzzing",
+      "Verifier"
+    ]
+  },
+  {
+    "term": "Crash triage / deduplication",
+    "category": "sec",
+    "definition": "Grouping crashes by root cause and judging severity and exploitability. Needed so a grader doesn't reward the same bug 50 times.",
+    "see_also": [
+      "Grader"
+    ]
+  },
+  {
+    "term": "Patch / remediation",
+    "category": "sec",
+    "definition": "A code change that removes a vulnerability. A good grader checks both that the PoC no longer works and that functionality and tests still pass, because deleting the feature also 'fixes' the bug.",
+    "see_also": [
+      "Reward hacking"
+    ]
+  },
+  {
+    "term": "False positive",
+    "category": "sec",
+    "definition": "A reported vulnerability that isn't real. Models hallucinate findings readily, so rewarding claims without verification trains a false-positive factory.",
+    "see_also": [
+      "Hallucination",
+      "Verifier"
+    ]
+  },
+  {
+    "term": "Ground truth",
+    "category": "sec",
+    "definition": "The verified correct answer for a task, such as the known bug, the working exploit or the valid patch. Environments with trustworthy ground truth yield trustworthy rewards.",
+    "see_also": [
+      "Verifier",
+      "Proof of solvability"
+    ]
+  },
+  {
+    "term": "Capture the Flag (CTF)",
+    "category": "sec",
+    "definition": "Security competitions where solving a challenge yields a secret 'flag' string. The format is naturally verifiable and widely used in AI cyber evals (Cybench, InterCode-CTF), but public CTFs carry contamination risk.",
+    "see_also": [
+      "Data contamination",
+      "Benchmark"
+    ]
+  },
+  {
+    "term": "Cyber range",
+    "category": "sec",
+    "definition": "A realistic, isolated network environment for practicing attack and defense, the multi-host analogue of a sandbox.",
+    "see_also": [
+      "Sandbox"
+    ]
+  },
+  {
+    "term": "Bug bounty",
+    "category": "sec",
+    "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
+    "see_also": [
+      "Ground truth"
+    ]
+  }
+]
