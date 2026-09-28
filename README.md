@@ -1,6 +1,6 @@
 # AI and Reinforcement Learning Glossary
 
-A searchable glossary of **124 artificial intelligence and reinforcement learning terms**, written for people who need to hold a technical conversation with ML researchers without being one. It covers transformer basics through RL post-training, environments and graders, reward hacking, evaluation and safety, and the code-security vocabulary that shows up when RL targets vulnerability work.
+A searchable glossary of **134 artificial intelligence and reinforcement learning terms**, written for people who need to hold a technical conversation with ML researchers without being one. It covers transformer basics through RL post-training, environments and graders, reward hacking, evaluation and safety, and the code-security vocabulary that shows up when RL targets vulnerability work.
 
 - **Browse it:** open [`index.html`](index.html) (or the GitHub Pages site once Pages is enabled) for search, topic filters and cross-linked "See also" terms.
 - **Read it on GitHub:** [`GLOSSARY.md`](GLOSSARY.md) has every term in plain Markdown.
