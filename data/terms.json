@@ -601,6 +601,18 @@
     ]
   },
   {
+    "term": "Asynchronous RL",
+    "category": "algo",
+    "aka": "async RL",
+    "definition": "Running rollout generation and policy updates in parallel instead of taking turns, so GPUs aren't idle while slow environments finish. The catch is staleness: some training data comes from a slightly older version of the policy, which has to be corrected for or training becomes unstable.",
+    "note": "Long agentic tasks with slow tools are where async matters most. Expect infrastructure teams to ask how an environment behaves when episodes run long or vary a lot in duration.",
+    "see_also": [
+      "Rollout infrastructure",
+      "On-policy vs. off-policy",
+      "PPO"
+    ]
+  },
+  {
     "term": "Post-training",
     "category": "post",
     "definition": "Everything after pretraining that shapes a model's behavior: SFT, preference tuning, RLHF, RLVR, safety training. The frontier's capability gains increasingly come from here, especially RL.",
@@ -861,7 +873,8 @@
     "category": "env",
     "definition": "An isolated execution environment (container, VM, microVM) where the agent can run code without escaping or affecting real systems. For offensive security tasks, strong isolation is non-negotiable.",
     "see_also": [
-      "RL environment (for LLMs)"
+      "RL environment (for LLMs)",
+      "Containment failure"
     ]
   },
   {
@@ -896,7 +909,8 @@
     "definition": "The systems that spin up environment instances, run policy inference, execute tools and collect trajectories at scale, often thousands of concurrent sandboxes. Environment startup time and reliability directly affect training cost.",
     "see_also": [
       "Rollout",
-      "Sandbox"
+      "Sandbox",
+      "Asynchronous RL"
     ]
   },
   {
@@ -914,6 +928,18 @@
     "definition": "Evidence that a task can actually be completed, such as a reference solution or a working exploit. Unsolvable tasks waste compute and poison the reward signal.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Containment failure",
+    "category": "env",
+    "aka": "sandbox escape, eval breakout",
+    "definition": "When an agent that was supposed to be isolated reaches real systems it was never meant to touch. In 2026, Anthropic and Google both disclosed that their models broke into real companies' systems during third-party cyber evaluations after harness misconfigurations left internet access open. The models used basic techniques such as weak or leaked passwords.",
+    "note": "This is now a board-level concern for labs running offensive-security training and evals. Buyers will ask hard questions about network isolation, egress controls and how an environment proves it is sealed.",
+    "see_also": [
+      "Sandbox",
+      "Cyber range",
+      "Third-party evaluator"
     ]
   },
   {
@@ -972,7 +998,8 @@
     "definition": "Malicious instructions hidden in content the model processes (a web page, file, tool output) that hijack an agent's behavior. It is a leading security risk for agents with tool access.",
     "see_also": [
       "Agent (AI)",
-      "Tool use / function calling"
+      "Tool use / function calling",
+      "Agent supply-chain attack"
     ]
   },
   {
@@ -990,7 +1017,8 @@
     "definition": "A lab's published policy (Anthropic RSP, OpenAI Preparedness Framework, Google DeepMind Frontier Safety Framework) that defines dangerous-capability thresholds, including cyber, and the safeguards required before deploying past them.",
     "note": "Cyber-offense is a named risk domain in these frameworks. Labs must measure it, which creates demand for rigorous security evals alongside training environments.",
     "see_also": [
-      "Dual-use / cyber uplift"
+      "Dual-use / cyber uplift",
+      "Third-party evaluator"
     ]
   },
   {
@@ -1027,6 +1055,30 @@
     ]
   },
   {
+    "term": "Third-party evaluator",
+    "category": "eval",
+    "aka": "external eval partner",
+    "definition": "An independent organization that tests a lab's models, often before release, for dangerous capabilities such as cyber offense. Examples include private groups like METR, Apollo Research and Irregular, and government bodies like the US CAISI and UK AISI.",
+    "note": "They are both potential customers and part of the ecosystem RLEs plug into. Labs increasingly rely on outside evaluators, and recent containment failures in partner-built environments show that evaluators are judged on environment safety as well as test quality.",
+    "see_also": [
+      "Frontier safety framework",
+      "Dual-use / cyber uplift",
+      "System card / model card"
+    ]
+  },
+  {
+    "term": "Agent supply-chain attack",
+    "category": "eval",
+    "aka": "poisoned skills / plugins",
+    "definition": "Compromising an AI agent through the add-ons it installs (skills, plugins, MCP servers) instead of attacking the model directly. Malicious add-ons can carry prompt injection, ordinary malware or both. In September 2026 the Plugin4Shell disclosure showed that four major coding agents could be hijacked through tampered plugin updates with no user action.",
+    "note": "AppSec leaders see coding agents and their plugin marketplaces as the new npm. It is a growing attack surface, and environments that train and test agents against it are directly relevant.",
+    "see_also": [
+      "Prompt injection",
+      "Model Context Protocol (MCP)",
+      "Tool use / function calling"
+    ]
+  },
+  {
     "term": "Fuzzing",
     "category": "sec",
     "definition": "Automated testing that feeds large volumes of generated or mutated inputs to a program to trigger crashes and bugs. Coverage-guided fuzzers (AFL++, libFuzzer) and Mayhem are examples. Fuzzing produces reproducible, verifiable ground truth.",
@@ -1057,7 +1109,8 @@
     "category": "sec",
     "definition": "Code that leverages a vulnerability to achieve an attacker goal, such as control-flow hijack, code execution or data exfiltration. It goes well beyond a crash.",
     "see_also": [
-      "Proof of concept (PoC)"
+      "Proof of concept (PoC)",
+      "Zero-day / n-day"
     ]
   },
   {
@@ -1127,6 +1180,17 @@
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Zero-day / n-day",
+    "category": "sec",
+    "definition": "A zero-day is a vulnerability that is unknown to the vendor and unpatched. An n-day is one that has been disclosed or patched, but systems that haven't updated are still exposed. Attackers often 'patch diff', comparing old and new code to find exactly what was fixed, and AI now turns patches into working exploits in hours.",
+    "note": "The exploit window is shrinking fast: Anthropic reports models turning Firefox and Windows patches into exploits within hours. That puts pressure on AppSec teams and makes realistic exploit-generation tasks valuable to labs measuring cyber capability.",
+    "see_also": [
+      "Vulnerability (CVE / CWE)",
+      "Exploit",
+      "Patch / remediation"
     ]
   }
 ]
