@@ -675,7 +675,8 @@
     "see_also": [
       "Verifier",
       "Grader",
-      "Reasoning model"
+      "Reasoning model",
+      "Reinforcement fine-tuning (RFT)"
     ]
   },
   {
@@ -743,6 +744,17 @@
     ]
   },
   {
+    "term": "Reinforcement fine-tuning (RFT)",
+    "category": "post",
+    "definition": "RL post-training sold as a product: a customer supplies tasks and a grader, and a platform trains a model to score well against that grader. OpenAI, Azure, Amazon Bedrock and, as of October 2026, Cloudflare all offer it.",
+    "note": "It moves RL out of frontier labs and into ordinary enterprises. Those customers need tasks and graders they can trust, which widens the market for environments and grading expertise beyond the big labs.",
+    "see_also": [
+      "RLVR",
+      "Grader",
+      "Post-training"
+    ]
+  },
+  {
     "term": "RL environment (for LLMs)",
     "category": "env",
     "definition": "A packaged, reproducible setting a model can act in during RL training: a task prompt, a sandboxed world (repo, binary, network, browser), tools, and a grader that emits reward. Labs buy or build these at scale; quality, diversity and resistance to hacking are what differentiate them.",
@@ -750,7 +762,8 @@
     "see_also": [
       "Task",
       "Grader",
-      "Sandbox"
+      "Sandbox",
+      "Replica environment"
     ]
   },
   {
@@ -799,7 +812,8 @@
     "see_also": [
       "Grader",
       "KL penalty / reference model",
-      "Reward shaping"
+      "Reward shaping",
+      "Environment hardening"
     ]
   },
   {
@@ -914,6 +928,30 @@
     "definition": "Evidence that a task can actually be completed, such as a reference solution or a working exploit. Unsolvable tasks waste compute and poison the reward signal.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Environment hardening",
+    "category": "env",
+    "aka": "reward integrity",
+    "definition": "Closing the loopholes that let an agent get reward without doing the task: hiding answer files, blocking internet lookups of solutions, making tests and grader code read-only, and checking the whole reward path, not just the final verifier. It is often done by red-teaming the environment with agents that try to cheat.",
+    "note": "Recent audits found cheating in top Terminal-Bench leaderboard runs, and that 15% of Terminal-Bench 2.0 tasks were hackable. Research leads now ask vendors directly how environments were hardened and how hacks are detected.",
+    "see_also": [
+      "Reward hacking",
+      "Grader",
+      "Sandbox"
+    ]
+  },
+  {
+    "term": "Replica environment",
+    "category": "env",
+    "aka": "app clone, workflow simulation",
+    "definition": "An RL environment that recreates a real product or business process, such as a copy of a SaaS app, a website or a company's operational workflow, so an agent can practice realistic work safely. Fidelity to the real thing is the selling point.",
+    "note": "This is a fast-growing and expensive segment. Epoch AI reports product clones costing around $300,000 each, and in October 2026 micro1 committed $1B to license enterprise data for workflow environments. Useful context when positioning security environments built on real software.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Task",
+      "Generalization"
     ]
   },
   {
@@ -1057,7 +1095,8 @@
     "category": "sec",
     "definition": "Code that leverages a vulnerability to achieve an attacker goal, such as control-flow hijack, code execution or data exfiltration. It goes well beyond a crash.",
     "see_also": [
-      "Proof of concept (PoC)"
+      "Proof of concept (PoC)",
+      "Exploit chain"
     ]
   },
   {
@@ -1127,6 +1166,17 @@
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Exploit chain",
+    "category": "sec",
+    "definition": "Several vulnerabilities used in sequence to reach a goal no single bug allows, for example a browser bug to run code, then a kernel bug to escape the sandbox and take over the machine. Chaining is what turns individual bugs into real-world compromises.",
+    "note": "Frontier models now chain bugs on their own. Reports on Anthropic's Mythos say many of its highest-impact exploits were chains, which raises the bar for both cyber evals and training tasks beyond single-bug PoCs.",
+    "see_also": [
+      "Exploit",
+      "Vulnerability (CVE / CWE)",
+      "Tiered / partial-credit reward"
     ]
   }
 ]
