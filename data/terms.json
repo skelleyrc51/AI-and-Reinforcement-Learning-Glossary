@@ -195,7 +195,8 @@
     "category": "found",
     "definition": "Training a smaller student model to imitate a larger teacher model's outputs or probability distributions. It is common for turning RL-trained reasoning ability into cheaper models.",
     "see_also": [
-      "Synthetic data"
+      "Synthetic data",
+      "On-policy distillation"
     ]
   },
   {
@@ -743,6 +744,18 @@
     ]
   },
   {
+    "term": "On-policy distillation",
+    "category": "post",
+    "aka": "OPD",
+    "definition": "A post-training method where the student model generates its own attempts and a stronger teacher model grades every token of them, so the student learns from its own mistakes with dense feedback. Labs often train separate RL specialists per domain, then distill them into one model this way.",
+    "note": "It is now a standard step at many labs, often run right after RL. RL environments still produce the specialist skills that get distilled, so environment quality carries through to the final model.",
+    "see_also": [
+      "Distillation",
+      "RLVR",
+      "Post-training"
+    ]
+  },
+  {
     "term": "RL environment (for LLMs)",
     "category": "env",
     "definition": "A packaged, reproducible setting a model can act in during RL training: a task prompt, a sandboxed world (repo, binary, network, browser), tools, and a grader that emits reward. Labs buy or build these at scale; quality, diversity and resistance to hacking are what differentiate them.",
@@ -1015,7 +1028,8 @@
     "definition": "A model operating in a loop: observe, decide, call tools, repeat, until a goal is reached. Agentic coding and security agents are the product direction RL environments train for.",
     "see_also": [
       "Tool use / function calling",
-      "Agent (RL)"
+      "Agent (RL)",
+      "Computer-use agent"
     ]
   },
   {
@@ -1024,6 +1038,18 @@
     "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
     "see_also": [
       "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Computer-use agent",
+    "category": "eval",
+    "aka": "GUI agent, CUA",
+    "definition": "An agent that operates a computer the way a person does, by reading the screen and clicking, typing and scrolling in apps and browsers, instead of only calling APIs. OSWorld is the standard benchmark, and its 2.0 version tests long, multi-step workflows.",
+    "note": "Every major lab now ships computer-use features, which drives demand for realistic desktop, browser and app environments to train and evaluate them. OSWorld-Verified scores are clustering near the top, a sign of saturation.",
+    "see_also": [
+      "Agent (AI)",
+      "Tool use / function calling",
+      "Benchmark"
     ]
   },
   {
@@ -1118,7 +1144,8 @@
     "category": "sec",
     "definition": "A realistic, isolated network environment for practicing attack and defense, the multi-host analogue of a sandbox.",
     "see_also": [
-      "Sandbox"
+      "Sandbox",
+      "Cyber kill chain"
     ]
   },
   {
@@ -1127,6 +1154,18 @@
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Cyber kill chain",
+    "category": "sec",
+    "aka": "attack chain",
+    "definition": "The stages of an attack from start to finish: reconnaissance, initial access, exploitation, privilege escalation, lateral movement and data exfiltration. Security teams use it to describe how far an attacker got and where to stop them.",
+    "note": "Anthropic's September 2026 threat report described AI agents running most of the kill chain themselves, with humans just setting goals and reviewing results. Cyber evals and training tasks increasingly cover several stages, not just a single bug.",
+    "see_also": [
+      "Exploit",
+      "Cyber range",
+      "Dual-use / cyber uplift"
     ]
   }
 ]
