@@ -628,9 +628,9 @@ Also: specification gaming
 
 The policy finds a way to earn reward without doing the intended task: editing the tests, special-casing inputs, claiming success, exploiting grader bugs. It is the single biggest failure mode labs worry about in purchased environments.
 
-> **In the room:** Reward hacking isn't hypothetical in code tasks. Models have been documented modifying test files or hardcoding expected outputs. Execution-verified security outcomes are a strong answer.
+> **In the room:** Reward hacking isn't hypothetical in code tasks. Models have been documented modifying test files or hardcoding expected outputs. Execution-verified security outcomes are a strong answer. For AI red teaming and security testing of RL agents, a reward hack is an exploit against the training setup itself, so probe the grader and sandbox like any attack surface. A gameable reward is a security finding: a model that learns to cheat the grader may carry that behavior into deployment.
 
-See also: [Grader](#grader), [KL penalty / reference model](#kl-penalty--reference-model), [Reward shaping](#reward-shaping)
+See also: [Grader](#grader), [KL penalty / reference model](#kl-penalty--reference-model), [Reward shaping](#reward-shaping), [Red teaming](#red-teaming), [Sandbox](#sandbox)
 
 ### Reward shaping
 
