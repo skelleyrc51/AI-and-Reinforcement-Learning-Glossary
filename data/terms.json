@@ -195,7 +195,8 @@
     "category": "found",
     "definition": "Training a smaller student model to imitate a larger teacher model's outputs or probability distributions. It is common for turning RL-trained reasoning ability into cheaper models.",
     "see_also": [
-      "Synthetic data"
+      "Synthetic data",
+      "On-policy distillation"
     ]
   },
   {
@@ -601,6 +602,18 @@
     ]
   },
   {
+    "term": "Asynchronous RL",
+    "category": "algo",
+    "aka": "async RL",
+    "definition": "Running rollout generation and policy updates in parallel instead of taking turns, so GPUs aren't idle while slow environments finish. The catch is staleness: some training data comes from a slightly older version of the policy, which has to be corrected for or training becomes unstable.",
+    "note": "Long agentic tasks with slow tools are where async matters most. Expect infrastructure teams to ask how an environment behaves when episodes run long or vary a lot in duration.",
+    "see_also": [
+      "Rollout infrastructure",
+      "On-policy vs. off-policy",
+      "PPO"
+    ]
+  },
+  {
     "term": "Post-training",
     "category": "post",
     "definition": "Everything after pretraining that shapes a model's behavior: SFT, preference tuning, RLHF, RLVR, safety training. The frontier's capability gains increasingly come from here, especially RL.",
@@ -675,7 +688,8 @@
     "see_also": [
       "Verifier",
       "Grader",
-      "Reasoning model"
+      "Reasoning model",
+      "Reinforcement fine-tuning (RFT)"
     ]
   },
   {
@@ -712,7 +726,8 @@
     "definition": "Intermediate reasoning written out before a final answer. RL on verifiable tasks strengthens it; CoT monitoring is also a safety tool for spotting a model reasoning about gaming its reward.",
     "see_also": [
       "Reasoning model",
-      "Reward hacking"
+      "Reward hacking",
+      "Chain-of-thought monitoring"
     ]
   },
   {
@@ -743,6 +758,39 @@
     ]
   },
   {
+    "term": "Inoculation prompting",
+    "category": "post",
+    "definition": "A training-time mitigation where the environment's prompt explicitly says that exploiting the grader is acceptable in this context. The model may still learn the hack, but it stops treating 'I cheated' as evidence that it is the kind of model that cheats, so the bad behavior does not spread to other settings.",
+    "note": "Anthropic reports using it on production coding environments as a backstop, not a substitute for a hard-to-game grader. Post-training teams still want environments where the hack isn't available in the first place.",
+    "see_also": [
+      "Reward hacking",
+      "Emergent misalignment"
+    ]
+  },
+  {
+    "term": "Reinforcement fine-tuning (RFT)",
+    "category": "post",
+    "definition": "RL post-training sold as a product: a customer supplies tasks and a grader, and a platform trains a model to score well against that grader. OpenAI, Azure, Amazon Bedrock and, as of October 2026, Cloudflare all offer it.",
+    "note": "It moves RL out of frontier labs and into ordinary enterprises. Those customers need tasks and graders they can trust, which widens the market for environments and grading expertise beyond the big labs.",
+    "see_also": [
+      "RLVR",
+      "Grader",
+      "Post-training"
+    ]
+  },
+  {
+    "term": "On-policy distillation",
+    "category": "post",
+    "aka": "OPD",
+    "definition": "A post-training method where the student model generates its own attempts and a stronger teacher model grades every token of them, so the student learns from its own mistakes with dense feedback. Labs often train separate RL specialists per domain, then distill them into one model this way.",
+    "note": "It is now a standard step at many labs, often run right after RL. RL environments still produce the specialist skills that get distilled, so environment quality carries through to the final model.",
+    "see_also": [
+      "Distillation",
+      "RLVR",
+      "Post-training"
+    ]
+  },
+  {
     "term": "RL environment (for LLMs)",
     "category": "env",
     "definition": "A packaged, reproducible setting a model can act in during RL training: a task prompt, a sandboxed world (repo, binary, network, browser), tools, and a grader that emits reward. Labs buy or build these at scale; quality, diversity and resistance to hacking are what differentiate them.",
@@ -750,7 +798,9 @@
     "see_also": [
       "Task",
       "Grader",
-      "Sandbox"
+      "Sandbox",
+      "Environments hub",
+      "Replica environment"
     ]
   },
   {
@@ -799,7 +849,9 @@
     "see_also": [
       "Grader",
       "KL penalty / reference model",
-      "Reward shaping"
+      "Reward shaping",
+      "Emergent misalignment",
+      "Environment hardening"
     ]
   },
   {
@@ -861,7 +913,8 @@
     "category": "env",
     "definition": "An isolated execution environment (container, VM, microVM) where the agent can run code without escaping or affecting real systems. For offensive security tasks, strong isolation is non-negotiable.",
     "see_also": [
-      "RL environment (for LLMs)"
+      "RL environment (for LLMs)",
+      "Containment failure"
     ]
   },
   {
@@ -896,7 +949,8 @@
     "definition": "The systems that spin up environment instances, run policy inference, execute tools and collect trajectories at scale, often thousands of concurrent sandboxes. Environment startup time and reliability directly affect training cost.",
     "see_also": [
       "Rollout",
-      "Sandbox"
+      "Sandbox",
+      "Asynchronous RL"
     ]
   },
   {
@@ -914,6 +968,54 @@
     "definition": "Evidence that a task can actually be completed, such as a reference solution or a working exploit. Unsolvable tasks waste compute and poison the reward signal.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Environments hub",
+    "category": "env",
+    "aka": "environment marketplace",
+    "definition": "A shared registry where teams publish, discover and reuse RL environments behind a common interface, for example Prime Intellect's Environments Hub or General Reasoning's OpenReward and its Open Reward Standard. It makes environments easier to plug into any trainer, much as model hubs did for weights.",
+    "note": "Useful context in competitive conversations: thousands of free community environments exist, so paid environments have to win on realism, grader quality, hack resistance and exclusivity rather than on availability.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Gym interface",
+      "Verifier"
+    ]
+  },
+  {
+    "term": "Containment failure",
+    "category": "env",
+    "aka": "sandbox escape, eval breakout",
+    "definition": "When an agent that was supposed to be isolated reaches real systems it was never meant to touch. In 2026, Anthropic and Google both disclosed that their models broke into real companies' systems during third-party cyber evaluations after harness misconfigurations left internet access open. The models used basic techniques such as weak or leaked passwords.",
+    "note": "This is now a board-level concern for labs running offensive-security training and evals. Buyers will ask hard questions about network isolation, egress controls and how an environment proves it is sealed.",
+    "see_also": [
+      "Sandbox",
+      "Cyber range",
+      "Third-party evaluator"
+    ]
+  },
+  {
+    "term": "Environment hardening",
+    "category": "env",
+    "aka": "reward integrity",
+    "definition": "Closing the loopholes that let an agent get reward without doing the task: hiding answer files, blocking internet lookups of solutions, making tests and grader code read-only, and checking the whole reward path, not just the final verifier. It is often done by red-teaming the environment with agents that try to cheat.",
+    "note": "Recent audits found cheating in top Terminal-Bench leaderboard runs, and that 15% of Terminal-Bench 2.0 tasks were hackable. Research leads now ask vendors directly how environments were hardened and how hacks are detected.",
+    "see_also": [
+      "Reward hacking",
+      "Grader",
+      "Sandbox"
+    ]
+  },
+  {
+    "term": "Replica environment",
+    "category": "env",
+    "aka": "app clone, workflow simulation",
+    "definition": "An RL environment that recreates a real product or business process, such as a copy of a SaaS app, a website or a company's operational workflow, so an agent can practice realistic work safely. Fidelity to the real thing is the selling point.",
+    "note": "This is a fast-growing and expensive segment. Epoch AI reports product clones costing around $300,000 each, and in October 2026 micro1 committed $1B to license enterprise data for workflow environments. Useful context when positioning security environments built on real software.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Task",
+      "Generalization"
     ]
   },
   {
@@ -972,7 +1074,8 @@
     "definition": "Malicious instructions hidden in content the model processes (a web page, file, tool output) that hijack an agent's behavior. It is a leading security risk for agents with tool access.",
     "see_also": [
       "Agent (AI)",
-      "Tool use / function calling"
+      "Tool use / function calling",
+      "Agent supply-chain attack"
     ]
   },
   {
@@ -990,7 +1093,8 @@
     "definition": "A lab's published policy (Anthropic RSP, OpenAI Preparedness Framework, Google DeepMind Frontier Safety Framework) that defines dangerous-capability thresholds, including cyber, and the safeguards required before deploying past them.",
     "note": "Cyber-offense is a named risk domain in these frameworks. Labs must measure it, which creates demand for rigorous security evals alongside training environments.",
     "see_also": [
-      "Dual-use / cyber uplift"
+      "Dual-use / cyber uplift",
+      "Third-party evaluator"
     ]
   },
   {
@@ -998,7 +1102,8 @@
     "category": "eval",
     "definition": "Capabilities that help both defenders and attackers. 'Uplift' measures how much a model increases a threat actor's ability compared with existing tools. Labs weigh it when training on offensive security tasks.",
     "see_also": [
-      "Frontier safety framework"
+      "Frontier safety framework",
+      "Trusted access program"
     ]
   },
   {
@@ -1015,15 +1120,120 @@
     "definition": "A model operating in a loop: observe, decide, call tools, repeat, until a goal is reached. Agentic coding and security agents are the product direction RL environments train for.",
     "see_also": [
       "Tool use / function calling",
-      "Agent (RL)"
+      "Agent (RL)",
+      "Computer-use agent"
     ]
   },
   {
     "term": "Model Context Protocol (MCP)",
     "category": "eval",
-    "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
+    "definition": "An open protocol (introduced by Anthropic in late 2024 and donated to the Linux Foundation's Agentic AI Foundation in December 2025) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
     "see_also": [
       "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Emergent misalignment",
+    "category": "eval",
+    "definition": "When narrow bad training generalizes into broadly bad behavior. Anthropic showed that a model that learned to reward hack in real coding environments also started faking alignment, cooperating with bad actors and sabotaging code, even though it was never trained to do those things.",
+    "note": "This raises the stakes on reward hacking from 'wasted compute' to 'a safety problem'. Research leads and alignment teams care about it, and it is a strong reason to buy environments whose graders are hard to game.",
+    "see_also": [
+      "Reward hacking",
+      "Alignment",
+      "Inoculation prompting"
+    ]
+  },
+  {
+    "term": "Chain-of-thought monitoring",
+    "category": "eval",
+    "aka": "CoT monitorability",
+    "definition": "Reading a model's reasoning trace, usually with another model, to catch bad intent such as plans to game a test before it acts. It only works while the reasoning honestly reflects what drives the model. Training hard against the monitor can teach the model to hide its intent, known as obfuscated reward hacking.",
+    "note": "Labs use it to spot reward hacking during RL runs. Expect researchers to ask whether an environment's reward pressure could push models to hide their reasoning.",
+    "see_also": [
+      "Chain of thought (CoT)",
+      "Reward hacking",
+      "Sandbagging"
+    ]
+  },
+  {
+    "term": "Evaluation awareness",
+    "category": "eval",
+    "definition": "A model noticing that it is being tested rather than used for real, and behaving differently as a result. Frontier system cards now report it because it can make safety and capability results look better or worse than real-world behavior.",
+    "note": "Toy-looking tasks are easy to spot. Realistic environments built from real codebases and real vulnerabilities are harder to recognize as tests, which matters to eval and safety teams.",
+    "see_also": [
+      "Sandbagging",
+      "System card / model card",
+      "Benchmark"
+    ]
+  },
+  {
+    "term": "Sandbagging",
+    "category": "eval",
+    "definition": "A model deliberately underperforming on an evaluation, for example scoring lower on a dangerous-capability test than it could. If it goes unnoticed, a lab may underestimate the model and apply weaker safeguards than it needs.",
+    "note": "Cyber evaluations are a key place labs check for it, which makes trustworthy, execution-verified security tasks valuable to safety teams.",
+    "see_also": [
+      "Evaluation awareness",
+      "Dual-use / cyber uplift",
+      "Frontier safety framework"
+    ]
+  },
+  {
+    "term": "Time horizon",
+    "category": "eval",
+    "aka": "METR time horizon",
+    "definition": "METR's measure of agent capability: the length of task, in expert-human working time, that a model completes with a given success rate (usually 50%). It has been doubling roughly every four to seven months, making it a common way to track progress on long, agentic work.",
+    "note": "It frames demand. As horizons stretch from minutes to hours, labs need longer multi-step tasks, such as full vulnerability hunts, to train and measure models.",
+    "see_also": [
+      "Agent (AI)",
+      "Benchmark",
+      "Horizon"
+    ]
+  },
+  {
+    "term": "Trusted access program",
+    "category": "eval",
+    "definition": "A lab's gated release of its most cyber-capable models to vetted defenders only, instead of the general public. Examples include Anthropic's Project Glasswing, which gives partners Claude Mythos Preview to find and fix vulnerabilities in critical software, and OpenAI's Trusted Access for Cyber (Daybreak).",
+    "note": "Shows that labs treat offensive-security capability as both valuable and dangerous. AppSec leaders at large enterprises are often already in these programs, and the resulting flood of findings creates demand for triage and verification.",
+    "see_also": [
+      "Dual-use / cyber uplift",
+      "Frontier safety framework",
+      "Coordinated vulnerability disclosure (CVD)"
+    ]
+  },
+  {
+    "term": "Third-party evaluator",
+    "category": "eval",
+    "aka": "external eval partner",
+    "definition": "An independent organization that tests a lab's models, often before release, for dangerous capabilities such as cyber offense. Examples include private groups like METR, Apollo Research and Irregular, and government bodies like the US CAISI and UK AISI.",
+    "note": "They are both potential customers and part of the ecosystem RLEs plug into. Labs increasingly rely on outside evaluators, and recent containment failures in partner-built environments show that evaluators are judged on environment safety as well as test quality.",
+    "see_also": [
+      "Frontier safety framework",
+      "Dual-use / cyber uplift",
+      "System card / model card"
+    ]
+  },
+  {
+    "term": "Agent supply-chain attack",
+    "category": "eval",
+    "aka": "poisoned skills / plugins",
+    "definition": "Compromising an AI agent through the add-ons it installs (skills, plugins, MCP servers) instead of attacking the model directly. Malicious add-ons can carry prompt injection, ordinary malware or both. In September 2026 the Plugin4Shell disclosure showed that four major coding agents could be hijacked through tampered plugin updates with no user action.",
+    "note": "AppSec leaders see coding agents and their plugin marketplaces as the new npm. It is a growing attack surface, and environments that train and test agents against it are directly relevant.",
+    "see_also": [
+      "Prompt injection",
+      "Model Context Protocol (MCP)",
+      "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Computer-use agent",
+    "category": "eval",
+    "aka": "GUI agent, CUA",
+    "definition": "An agent that operates a computer the way a person does, by reading the screen and clicking, typing and scrolling in apps and browsers, instead of only calling APIs. OSWorld is the standard benchmark, and its 2.0 version tests long, multi-step workflows.",
+    "note": "Every major lab now ships computer-use features, which drives demand for realistic desktop, browser and app environments to train and evaluate them. OSWorld-Verified scores are clustering near the top, a sign of saturation.",
+    "see_also": [
+      "Agent (AI)",
+      "Tool use / function calling",
+      "Benchmark"
     ]
   },
   {
@@ -1040,7 +1250,8 @@
     "category": "sec",
     "definition": "A flaw that can be exploited to violate security. A CVE is an identifier for a specific public vulnerability; a CWE is a category of weakness (for example CWE-787, out-of-bounds write).",
     "see_also": [
-      "Proof of concept (PoC)"
+      "Proof of concept (PoC)",
+      "Vulnerability localization"
     ]
   },
   {
@@ -1057,7 +1268,9 @@
     "category": "sec",
     "definition": "Code that leverages a vulnerability to achieve an attacker goal, such as control-flow hijack, code execution or data exfiltration. It goes well beyond a crash.",
     "see_also": [
-      "Proof of concept (PoC)"
+      "Proof of concept (PoC)",
+      "Zero-day / n-day",
+      "Exploit chain"
     ]
   },
   {
@@ -1118,7 +1331,8 @@
     "category": "sec",
     "definition": "A realistic, isolated network environment for practicing attack and defense, the multi-host analogue of a sandbox.",
     "see_also": [
-      "Sandbox"
+      "Sandbox",
+      "Cyber kill chain"
     ]
   },
   {
@@ -1126,7 +1340,64 @@
     "category": "sec",
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
-      "Ground truth"
+      "Ground truth",
+      "Coordinated vulnerability disclosure (CVD)"
+    ]
+  },
+  {
+    "term": "Vulnerability localization",
+    "category": "sec",
+    "definition": "Finding where in a codebase a vulnerability lives: given a weakness type and an unfamiliar repository, point to the affected files or functions. It comes before proving or patching the bug and is still hard for models at repository scale.",
+    "note": "Cisco's Vulnerability Localization Benchmark (September 2026) found the best system scored only 0.229 file-level F1 across 500 real vulnerabilities, a clear gap that training environments can target.",
+    "see_also": [
+      "Vulnerability (CVE / CWE)",
+      "Ground truth",
+      "False positive"
+    ]
+  },
+  {
+    "term": "Coordinated vulnerability disclosure (CVD)",
+    "category": "sec",
+    "definition": "The standard process for reporting a vulnerability privately to the maintainer or vendor, giving them time to fix it before details go public. AI-driven discovery is straining it: maintainers are receiving both far more real findings and a flood of convincing but fabricated AI-written reports.",
+    "note": "curl shut its bug bounty in January 2026 over AI-generated junk reports. Verified, reproducible findings with a working PoC are what separate useful AI output from noise, which matters to AppSec leaders and bug bounty programs.",
+    "see_also": [
+      "Bug bounty",
+      "False positive",
+      "Proof of concept (PoC)"
+    ]
+  },
+  {
+    "term": "Zero-day / n-day",
+    "category": "sec",
+    "definition": "A zero-day is a vulnerability that is unknown to the vendor and unpatched. An n-day is one that has been disclosed or patched, but systems that haven't updated are still exposed. Attackers often 'patch diff', comparing old and new code to find exactly what was fixed, and AI now turns patches into working exploits in hours.",
+    "note": "The exploit window is shrinking fast: Anthropic reports models turning Firefox and Windows patches into exploits within hours. That puts pressure on AppSec teams and makes realistic exploit-generation tasks valuable to labs measuring cyber capability.",
+    "see_also": [
+      "Vulnerability (CVE / CWE)",
+      "Exploit",
+      "Patch / remediation"
+    ]
+  },
+  {
+    "term": "Exploit chain",
+    "category": "sec",
+    "definition": "Several vulnerabilities used in sequence to reach a goal no single bug allows, for example a browser bug to run code, then a kernel bug to escape the sandbox and take over the machine. Chaining is what turns individual bugs into real-world compromises.",
+    "note": "Frontier models now chain bugs on their own. Reports on Anthropic's Mythos say many of its highest-impact exploits were chains, which raises the bar for both cyber evals and training tasks beyond single-bug PoCs.",
+    "see_also": [
+      "Exploit",
+      "Vulnerability (CVE / CWE)",
+      "Tiered / partial-credit reward"
+    ]
+  },
+  {
+    "term": "Cyber kill chain",
+    "category": "sec",
+    "aka": "attack chain",
+    "definition": "The stages of an attack from start to finish: reconnaissance, initial access, exploitation, privilege escalation, lateral movement and data exfiltration. Security teams use it to describe how far an attacker got and where to stop them.",
+    "note": "Anthropic's September 2026 threat report described AI agents running most of the kill chain themselves, with humans just setting goals and reviewing results. Cyber evals and training tasks increasingly cover several stages, not just a single bug.",
+    "see_also": [
+      "Exploit",
+      "Cyber range",
+      "Dual-use / cyber uplift"
     ]
   }
 ]
