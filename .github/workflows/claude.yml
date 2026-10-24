@@ -36,3 +36,5 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # The action ignores bot-triggered events unless the bot is listed here
           allowed_bots: 'claude[bot]'
+          # Let Claude regenerate and check GLOSSARY.md after editing data/
+          claude_args: '--allowedTools "Bash(python3 scripts/build.py),Bash(python3 scripts/build.py --check)"'
