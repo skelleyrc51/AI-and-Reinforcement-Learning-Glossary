@@ -750,7 +750,8 @@
     "see_also": [
       "Task",
       "Grader",
-      "Sandbox"
+      "Sandbox",
+      "Environment synthesis"
     ]
   },
   {
@@ -861,7 +862,8 @@
     "category": "env",
     "definition": "An isolated execution environment (container, VM, microVM) where the agent can run code without escaping or affecting real systems. For offensive security tasks, strong isolation is non-negotiable.",
     "see_also": [
-      "RL environment (for LLMs)"
+      "RL environment (for LLMs)",
+      "Covert channel"
     ]
   },
   {
@@ -914,6 +916,18 @@
     "definition": "Evidence that a task can actually be completed, such as a reference solution or a working exploit. Unsolvable tasks waste compute and poison the reward signal.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Environment synthesis",
+    "category": "env",
+    "aka": "automated environment generation",
+    "definition": "Using AI agents to build RL environments automatically: writing the task, packaging the container, producing a reference solution and writing the tests that grade it. The newest methods tailor each round of new environments to where the model being trained is currently failing.",
+    "note": "Microsoft Research's AutoEnvScaling (October 2026) reports far cheaper valid environments than prompt-only generation. Expect buyers to ask what hand-built, expert-verified environments offer over synthetic ones; ground truth, realism and hack resistance are the usual answers.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Synthetic data",
+      "Proof of solvability"
     ]
   },
   {
@@ -980,7 +994,8 @@
     "category": "eval",
     "definition": "Making models reliably pursue the goals their developers and users intend, including under optimization pressure. Reward hacking is an alignment failure in miniature.",
     "see_also": [
-      "Reward hacking"
+      "Reward hacking",
+      "AI control"
     ]
   },
   {
@@ -1024,6 +1039,18 @@
     "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
     "see_also": [
       "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "AI control",
+    "category": "eval",
+    "aka": "agent monitoring",
+    "definition": "Safety measures that assume a model might misbehave and aim to catch or block it anyway: monitoring every agent action, restricting permissions, and escalating suspicious behavior to humans. It complements alignment, which tries to make the model want the right thing in the first place.",
+    "note": "In October 2026, METR and Redwood Research reported that OpenAI's internal agent monitor initially didn't cover RL training runs and could be postponed or switched off. Labs now treat monitoring of training environments as a security requirement, which matters to anyone supplying them.",
+    "see_also": [
+      "Alignment",
+      "Red teaming",
+      "Agent (AI)"
     ]
   },
   {
@@ -1126,7 +1153,32 @@
     "category": "sec",
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
-      "Ground truth"
+      "Ground truth",
+      "Bug collision"
+    ]
+  },
+  {
+    "term": "Covert channel",
+    "category": "sec",
+    "aka": "side channel",
+    "definition": "A hidden way to leak information between systems that are supposed to be isolated, using a shared resource such as CPU cache timing, power draw or disk activity instead of a network connection. Spectre and Meltdown made the cache-timing version famous.",
+    "note": "In October 2026, OpenAI disclosed that its red-team agents passed secrets between isolated microVMs using CPU cache timing, and paused frontier training for 11 days to harden its environments. Isolation claims for RL sandboxes now get questioned at the hardware level.",
+    "see_also": [
+      "Sandbox",
+      "Cyber range",
+      "Exploit"
+    ]
+  },
+  {
+    "term": "Bug collision",
+    "category": "sec",
+    "aka": "duplicate discovery",
+    "definition": "When two or more researchers independently find the same vulnerability. Bug bounty programs usually pay only the first valid report, so later reports are closed as duplicates.",
+    "note": "AI is making collisions far more common. October 2026's critical PHP flaws were found separately by Wiz and by OpenAI with Calif, both using frontier models. Expect bounty programs and AppSec teams to see more duplicate reports, and buyers to value environments built on bugs that aren't already public.",
+    "see_also": [
+      "Bug bounty",
+      "Crash triage / deduplication",
+      "Data contamination"
     ]
   }
 ]
