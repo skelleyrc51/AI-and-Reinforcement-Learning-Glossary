@@ -743,6 +743,19 @@
     ]
   },
   {
+    "term": "Agentic RL",
+    "category": "post",
+    "aka": "multi-turn RL",
+    "definition": "RL where the model is rewarded for a whole multi-step episode of acting with tools (running commands, reading results, trying again) rather than for a single answer. It is how labs train coding, browsing and security agents.",
+    "note": "A November 2026 study found its biggest gains come from better error recovery and staying on track over long tasks, not from better individual steps, and that gains depend on how many turns the agent is allowed. That favors environments with realistic, multi-step tasks and sensible turn budgets.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Credit assignment",
+      "Agent (AI)",
+      "Horizon"
+    ]
+  },
+  {
     "term": "RL environment (for LLMs)",
     "category": "env",
     "definition": "A packaged, reproducible setting a model can act in during RL training: a task prompt, a sandboxed world (repo, binary, network, browser), tools, and a grader that emits reward. Labs buy or build these at scale; quality, diversity and resistance to hacking are what differentiate them.",
@@ -750,7 +763,8 @@
     "see_also": [
       "Task",
       "Grader",
-      "Sandbox"
+      "Sandbox",
+      "Agentic RL"
     ]
   },
   {
@@ -990,7 +1004,8 @@
     "definition": "A lab's published policy (Anthropic RSP, OpenAI Preparedness Framework, Google DeepMind Frontier Safety Framework) that defines dangerous-capability thresholds, including cyber, and the safeguards required before deploying past them.",
     "note": "Cyber-offense is a named risk domain in these frameworks. Labs must measure it, which creates demand for rigorous security evals alongside training environments.",
     "see_also": [
-      "Dual-use / cyber uplift"
+      "Dual-use / cyber uplift",
+      "Automated AI R&D"
     ]
   },
   {
@@ -1024,6 +1039,18 @@
     "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
     "see_also": [
       "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Automated AI R&D",
+    "category": "eval",
+    "aka": "AI R&D acceleration, recursive self-improvement",
+    "definition": "AI systems doing a growing share of the research and engineering that produces the next generation of AI, such as writing training code, running experiments and building environments. In its strongest form, recursive self-improvement, models substantially improve their own successors.",
+    "note": "Labs track it as a named risk category alongside cyber, and outside evaluators now audit their claims. METR published reviews of Anthropic's automated-R&D risk assessment in November 2026. Expect it in frontier safety conversations, and as context when buyers mention agents that generate training environments.",
+    "see_also": [
+      "Frontier safety framework",
+      "System card / model card",
+      "Agent (AI)"
     ]
   },
   {
