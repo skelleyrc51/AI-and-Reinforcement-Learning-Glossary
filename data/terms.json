@@ -1057,7 +1057,9 @@
     "category": "sec",
     "definition": "Code that leverages a vulnerability to achieve an attacker goal, such as control-flow hijack, code execution or data exfiltration. It goes well beyond a crash.",
     "see_also": [
-      "Proof of concept (PoC)"
+      "Proof of concept (PoC)",
+      "Privilege escalation",
+      "Automated exploit generation"
     ]
   },
   {
@@ -1075,7 +1077,8 @@
     "category": "sec",
     "definition": "Grouping crashes by root cause and judging severity and exploitability. Needed so a grader doesn't reward the same bug 50 times.",
     "see_also": [
-      "Grader"
+      "Grader",
+      "Variant analysis"
     ]
   },
   {
@@ -1127,6 +1130,41 @@
     "definition": "Programs paying researchers for valid vulnerability reports. They generate real-world, human-validated vulnerability data and triage expertise, a source of realistic tasks and grading judgment.",
     "see_also": [
       "Ground truth"
+    ]
+  },
+  {
+    "term": "Privilege escalation",
+    "category": "sec",
+    "aka": "LPE (local privilege escalation)",
+    "definition": "Exploiting a bug to gain more access than you started with, typically going from an ordinary user account to administrator or root on a machine. Local privilege escalation (LPE) bugs in operating system kernels are among the most valuable, because they turn a small foothold into full control.",
+    "note": "In November 2026, OpenAI reported its pipeline produced working root exploits for 948 distinct Linux kernel LPE bugs. 'Got root' is a clean, verifiable success signal, which makes LPE a natural target for both cyber evals and training tasks.",
+    "see_also": [
+      "Exploit",
+      "Vulnerability (CVE / CWE)",
+      "Proof of concept (PoC)"
+    ]
+  },
+  {
+    "term": "Automated exploit generation",
+    "category": "sec",
+    "aka": "AEG",
+    "definition": "Software, now usually AI agents, that turns a known bug or crash into a working exploit without a human writing it. The idea dates back to DARPA's 2016 Cyber Grand Challenge, but frontier models have made it practical at scale.",
+    "note": "OpenAI's November 2026 Linux run cost about $1,279 per working privilege-escalation exploit. Cost per verified exploit is becoming a real metric. Labs measuring cyber capability and security teams weighing the threat both care about it.",
+    "see_also": [
+      "Exploit",
+      "Proof of concept (PoC)",
+      "Dual-use / cyber uplift"
+    ]
+  },
+  {
+    "term": "Variant analysis",
+    "category": "sec",
+    "definition": "Taking one known vulnerability and searching for other bugs with the same root cause or pattern elsewhere in the code. It is also used to group many crashes or exploits into the distinct underlying bugs, counted by the fix that closes each one.",
+    "note": "OpenAI used it to collapse 1,169 working root exploits into 948 distinct bugs. When a vendor cites a big vulnerability count, ask whether it has been through variant analysis and deduplication.",
+    "see_also": [
+      "Crash triage / deduplication",
+      "Vulnerability (CVE / CWE)",
+      "Patch / remediation"
     ]
   }
 ]
