@@ -750,7 +750,8 @@
     "see_also": [
       "Task",
       "Grader",
-      "Sandbox"
+      "Sandbox",
+      "Environment exclusivity"
     ]
   },
   {
@@ -917,6 +918,18 @@
     ]
   },
   {
+    "term": "Environment exclusivity",
+    "category": "env",
+    "aka": "exclusive license",
+    "definition": "A deal where a lab buys sole rights to an RL environment or task set, so the vendor cannot sell the same tasks to anyone else. Non-exclusive environments can be resold to many labs, including competitors.",
+    "note": "Exclusive deals reportedly cost several times more than non-exclusive ones (Epoch AI). A November 2026 ChinaTalk investigation reported environments first built for US frontier labs being resold to Chinese labs, so expect buyers to ask who else has the tasks and where they were sold.",
+    "see_also": [
+      "RL environment (for LLMs)",
+      "Data contamination",
+      "Held-out set"
+    ]
+  },
+  {
     "term": "Benchmark",
     "category": "eval",
     "definition": "A fixed task set with a scoring method used to compare models (SWE-bench, MMLU, Cybench). Labs report headline numbers on them, and saturated or contaminated benchmarks push demand for fresh evaluations.",
@@ -998,7 +1011,8 @@
     "category": "eval",
     "definition": "Capabilities that help both defenders and attackers. 'Uplift' measures how much a model increases a threat actor's ability compared with existing tools. Labs weigh it when training on offensive security tasks.",
     "see_also": [
-      "Frontier safety framework"
+      "Frontier safety framework",
+      "Export controls (AI)"
     ]
   },
   {
@@ -1024,6 +1038,17 @@
     "definition": "An open protocol (introduced by Anthropic, late 2024) for connecting models to tools and data sources through a standard server interface. It is widely adopted across agent frameworks.",
     "see_also": [
       "Tool use / function calling"
+    ]
+  },
+  {
+    "term": "Export controls (AI)",
+    "category": "eval",
+    "definition": "Government rules limiting which countries and organizations can buy advanced AI technology, such as chips, model weights or dual-use software. In the US they are run by the Commerce Department's Bureau of Industry and Security (BIS), mostly through the Entity List.",
+    "note": "A November 2026 ChinaTalk investigation estimated that US vendors sold about $500M of training data, much of it RL environments, to Chinese labs, and argued that environments are largely outside current controls. Expect more compliance and customer-vetting questions from labs and government buyers, especially for offensive-security environments.",
+    "see_also": [
+      "Dual-use / cyber uplift",
+      "RL environment (for LLMs)",
+      "Frontier safety framework"
     ]
   },
   {
